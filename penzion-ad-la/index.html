@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Penzion Adéla</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Figtree:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    img { max-width: 100%; display: block; }
+
+    :root {
+      --pine:   #2f4034;
+      --pine2:  #26362c;
+      --sage:   #7d9179;
+      --sand:   #e7dcc8;
+      --stone:  #ddd0b9;
+      --cream:  #f6f1e7;
+      --paper:  #fbf7ef;
+      --honey:  #c39a5b;
+      --honey2: #a97f3d;
+      --ink:    #2a2620;
+      --ink2:   #4c473d;
+      --muted:  #857e70;
+      --line:   rgba(47,64,52,.15);
+      --ease:   cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    body { font-family: 'Figtree', sans-serif; background: var(--paper); color: var(--ink); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+
+    #progress { position: fixed; top: 0; left: 0; right: 0; height: 2px; background: var(--honey); transform-origin: left; transform: scaleX(0); z-index: 9999; transition: transform .1s linear; }
+
+    /* NAV */
+    #navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 1.5rem 5%; display: flex; align-items: center; justify-content: space-between; transition: all .4s var(--ease); }
+    #navbar.scrolled { background: rgba(246,241,231,.93); backdrop-filter: blur(14px); padding: .95rem 5%; box-shadow: 0 1px 0 var(--line); }
+    .nav-logo { font-family: 'Spectral', serif; font-size: 1.55rem; font-weight: 600; color: #fff; text-decoration: none; letter-spacing: .01em; line-height: 1; text-shadow: 0 1px 18px rgba(0,0,0,.4); transition: color .4s var(--ease), text-shadow .4s var(--ease); }
+    .nav-logo span { color: var(--honey); }
+    #navbar.scrolled .nav-logo { color: var(--ink); text-shadow: none; }
+    .nav-links { display: flex; gap: 2.4rem; list-style: none; align-items: center; }
+    .nav-links a { color: rgba(255,255,255,.9); text-decoration: none; font-size: .8rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; transition: color .25s; position: relative; text-shadow: 0 1px 12px rgba(0,0,0,.35); }
+    #navbar.scrolled .nav-links a { color: var(--ink2); text-shadow: none; }
+    .nav-links a::after { content: ''; position: absolute; bottom: -5px; left: 0; right: 0; height: 2px; background: var(--honey); transform: scaleX(0); transform-origin: left; transition: transform .3s var(--ease); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+    .nav-cta { font-family: 'Figtree', sans-serif; font-size: .76rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--pine); background: var(--honey); padding: .72rem 1.5rem; border: none; cursor: pointer; text-decoration: none; transition: all .3s; border-radius: 999px; }
+    .nav-cta:hover { background: #d3ab6d; transform: translateY(-1px); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+    .hamburger span { display: block; width: 26px; height: 2px; background: #fff; transition: all .3s; box-shadow: 0 1px 8px rgba(0,0,0,.4); }
+    #navbar.scrolled .hamburger span { background: var(--ink); box-shadow: none; }
+
+    #mobile-nav { display: none; position: fixed; inset: 0; background: var(--pine); z-index: 999; flex-direction: column; align-items: center; justify-content: center; gap: 2.2rem; }
+    #mobile-nav.open { display: flex; }
+    #mobile-nav a { font-family: 'Spectral', serif; font-size: 2.4rem; font-weight: 500; color: var(--cream); text-decoration: none; }
+    #mobile-nav a:hover { color: var(--honey); font-style: italic; }
+    .close-nav { position: absolute; top: 2rem; right: 6%; background: none; border: none; color: var(--cream); font-size: 2rem; cursor: pointer; }
+
+    /* HERO */
+    #hero { position: relative; min-height: 100vh; background: linear-gradient(135deg, var(--pine2), var(--pine)); display: flex; align-items: flex-end; overflow: hidden; }
+    .hero-media { position: absolute; inset: 0; z-index: 0; }
+    .hero-media img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.08); animation: heroZoom 9s var(--ease) forwards; }
+    @keyframes heroZoom { to { transform: scale(1); } }
+    .hero-scrim { position: absolute; inset: 0; z-index: 1; background: linear-gradient(to top, rgba(23,32,26,.92) 0%, rgba(23,32,26,.3) 48%, rgba(23,32,26,.1) 72%, rgba(23,32,26,.5) 100%), linear-gradient(to right, rgba(23,32,26,.5), transparent 62%); }
+    .hero-inner { position: relative; z-index: 2; width: 100%; padding: 0 5% 6rem 8%; max-width: 1400px; }
+    .hero-badge { display: inline-flex; align-items: center; gap: .8rem; font-size: .72rem; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--cream); margin-bottom: 1.6rem; opacity: 0; animation: fadeUp .9s .2s var(--ease) forwards; }
+    .hero-badge::before { content: ''; width: 34px; height: 2px; background: var(--honey); }
+    .hero-title { font-family: 'Spectral', serif; font-size: clamp(2.9rem, 6vw, 5.6rem); font-weight: 600; line-height: 1.05; color: #fff; letter-spacing: -.01em; margin-bottom: 1.5rem; max-width: 16ch; opacity: 0; animation: fadeUp .9s .38s var(--ease) forwards; }
+    .hero-sub { font-size: 1.05rem; font-weight: 300; line-height: 1.75; color: rgba(246,241,231,.85); max-width: 480px; margin-bottom: 2.4rem; opacity: 0; animation: fadeUp .9s .56s var(--ease) forwards; }
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; opacity: 0; animation: fadeUp .9s .74s var(--ease) forwards; }
+    .btn-solid { background: var(--honey); color: var(--pine); padding: 1.05rem 2.3rem; border: none; cursor: pointer; font-family: 'Figtree', sans-serif; font-size: .8rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; text-decoration: none; display: inline-block; border-radius: 999px; transition: all .3s; }
+    .btn-solid:hover { background: #d3ab6d; transform: translateY(-2px); box-shadow: 0 10px 28px rgba(195,154,91,.4); }
+    .btn-ghost { background: transparent; color: #fff; padding: 1.05rem 2.3rem; border: 1px solid rgba(255,255,255,.4); font-family: 'Figtree', sans-serif; font-size: .8rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; text-decoration: none; display: inline-block; border-radius: 999px; transition: all .3s; }
+    .btn-ghost:hover { border-color: #fff; background: rgba(255,255,255,.1); transform: translateY(-2px); }
+    .hero-status { margin-top: 2.4rem; display: inline-flex; align-items: center; gap: .8rem; opacity: 0; animation: fadeUp .9s .92s var(--ease) forwards; }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #9fd0a6; box-shadow: 0 0 0 4px rgba(159,208,166,.2); animation: pulse 2.4s infinite; }
+    @keyframes pulse { 0%,100% { box-shadow: 0 0 0 4px rgba(159,208,166,.2); } 50% { box-shadow: 0 0 0 8px rgba(159,208,166,.07); } }
+    .hero-status-text { font-size: .82rem; color: rgba(246,241,231,.72); line-height: 1.4; }
+    .hero-status-text strong { color: #fff; display: block; font-size: .86rem; font-weight: 600; }
+
+    /* STATS */
+    .stats-bar { background: var(--pine); display: flex; justify-content: center; flex-wrap: wrap; }
+    .stat-item { padding: 2.8rem 3.5rem; text-align: center; border-right: 1px solid rgba(255,255,255,.09); flex: 1; min-width: 160px; }
+    .stat-item:last-child { border-right: none; }
+    .stat-number { font-family: 'Spectral', serif; font-size: 3rem; font-weight: 500; line-height: 1; color: var(--cream); }
+    .stat-suffix { color: var(--honey); }
+    .stat-label { font-size: .68rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: rgba(246,241,231,.5); margin-top: .7rem; }
+
+    /* SECTION SHARED */
+    section { padding: 7.5rem 8%; }
+    .eyebrow { display: inline-flex; align-items: center; gap: .8rem; font-size: .7rem; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--honey2); margin-bottom: 1.1rem; }
+    .eyebrow::before { content: ''; width: 30px; height: 2px; background: var(--honey); }
+    .eyebrow.center { justify-content: center; }
+    .eyebrow.center::before { display: none; }
+    h2.title { font-family: 'Spectral', serif; font-size: clamp(2.3rem, 4.2vw, 3.7rem); font-weight: 600; line-height: 1.1; letter-spacing: -.01em; margin-bottom: 1.4rem; color: var(--pine); }
+    h2.title em { font-style: italic; color: var(--sage); }
+    .lead { font-size: 1rem; line-height: 1.85; color: var(--ink2); max-width: 560px; }
+
+    /* ABOUT */
+    #onas { background: var(--paper); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
+    .about-figure { position: relative; }
+    .about-figure img { width: 100%; height: 580px; object-fit: cover; border-radius: 4px; background: linear-gradient(135deg, var(--sage), var(--pine)); }
+    .about-frame { position: absolute; inset: auto -1.4rem -1.4rem auto; width: 60%; height: 60%; border: 1px solid var(--honey); border-radius: 4px; z-index: -1; }
+    .about-seal { position: absolute; top: 1.8rem; left: -1.8rem; width: 118px; height: 118px; border-radius: 50%; background: var(--honey); color: var(--pine); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; box-shadow: 0 14px 34px rgba(195,154,91,.4); }
+    .about-seal strong { font-family: 'Spectral', serif; font-size: 2rem; font-weight: 600; line-height: 1; }
+    .about-seal span { font-size: .56rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; margin-top: .2rem; }
+    .about-text { font-size: 1rem; line-height: 1.95; color: var(--ink2); margin-bottom: 2.4rem; }
+    .about-features { display: grid; grid-template-columns: 1fr 1fr; gap: 1.6rem 1.8rem; margin-bottom: 2.4rem; }
+    .feat { display: flex; align-items: flex-start; gap: 1rem; }
+    .feat-ico { width: 44px; height: 44px; flex-shrink: 0; border-radius: 50%; background: var(--sand); display: flex; align-items: center; justify-content: center; color: var(--pine); }
+    .feat-ico svg { width: 21px; height: 21px; }
+    .feat h4 { font-size: .92rem; font-weight: 600; margin-bottom: .15rem; color: var(--ink); }
+    .feat p { font-size: .8rem; color: var(--muted); line-height: 1.5; }
+
+    /* ROOMS */
+    #pokoje { background: var(--cream); }
+    .rooms-head { text-align: center; max-width: 620px; margin: 0 auto 4rem; }
+    .rooms-head .eyebrow { justify-content: center; }
+    .rooms-head .eyebrow::before { display: none; }
+    .rooms-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; max-width: 1200px; margin: 0 auto; }
+    .room-card { background: #fff; border-radius: 6px; overflow: hidden; box-shadow: 0 4px 24px rgba(47,64,52,.07); transition: transform .35s var(--ease), box-shadow .35s var(--ease); }
+    .room-card:hover { transform: translateY(-6px); box-shadow: 0 18px 44px rgba(47,64,52,.14); }
+    .room-photo { position: relative; height: 240px; overflow: hidden; background: linear-gradient(135deg, var(--sage), var(--pine)); }
+    .room-photo img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s var(--ease); }
+    .room-card:hover .room-photo img { transform: scale(1.05); }
+    .room-price { position: absolute; bottom: 1rem; right: 1rem; background: rgba(47,64,52,.92); color: var(--cream); font-size: .82rem; font-weight: 600; padding: .5rem .9rem; border-radius: 999px; backdrop-filter: blur(4px); }
+    .room-price strong { font-family: 'Spectral', serif; font-size: 1rem; color: var(--honey); }
+    .room-body { padding: 1.6rem 1.7rem 1.8rem; }
+    .room-body h3 { font-family: 'Spectral', serif; font-size: 1.5rem; font-weight: 600; color: var(--pine); margin-bottom: .5rem; }
+    .room-body p { font-size: .84rem; color: var(--muted); line-height: 1.6; margin-bottom: 1.2rem; }
+    .room-amen { display: flex; flex-wrap: wrap; gap: .6rem 1.1rem; padding-top: 1.1rem; border-top: 1px solid var(--line); }
+    .room-amen span { display: inline-flex; align-items: center; gap: .4rem; font-size: .76rem; color: var(--ink2); }
+    .room-amen svg { width: 16px; height: 16px; color: var(--sage); }
+    .rooms-note { text-align: center; margin-top: 3rem; }
+
+    /* OKOLÍ */
+    #okoli { background: var(--pine); color: var(--cream); }
+    #okoli .eyebrow { color: var(--honey); }
+    #okoli h2.title { color: #fff; }
+    #okoli h2.title em { color: var(--honey); }
+    #okoli .lead { color: rgba(246,241,231,.72); }
+    .okoli-head { text-align: center; max-width: 620px; margin: 0 auto 3.5rem; }
+    .okoli-head .eyebrow { justify-content: center; }
+    .okoli-head .eyebrow::before { display: none; }
+    .okoli-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.4rem; max-width: 1150px; margin: 0 auto; }
+    .okoli-card { background: rgba(255,255,255,.05); border: 1px solid rgba(246,241,231,.14); border-radius: 6px; padding: 1.8rem 1.6rem; transition: background .3s, border-color .3s, transform .3s; }
+    .okoli-card:hover { background: rgba(195,154,91,.12); border-color: rgba(195,154,91,.4); transform: translateY(-4px); }
+    .okoli-ico { width: 46px; height: 46px; border-radius: 50%; background: rgba(246,241,231,.08); color: var(--honey); display: flex; align-items: center; justify-content: center; margin-bottom: 1.1rem; }
+    .okoli-ico svg { width: 22px; height: 22px; }
+    .okoli-card h4 { font-family: 'Spectral', serif; font-size: 1.2rem; font-weight: 500; color: #fff; margin-bottom: .3rem; }
+    .okoli-card p { font-size: .8rem; color: rgba(246,241,231,.6); line-height: 1.55; }
+
+    /* GALLERY */
+    #galerie { padding: 6rem 0; background: var(--sand); overflow: hidden; }
+    .gallery-head { text-align: center; padding: 0 8%; margin-bottom: 3.2rem; }
+    .gallery-head .eyebrow { justify-content: center; }
+    .gallery-head .eyebrow::before { display: none; }
+    .marquee-wrap { display: flex; flex-direction: column; gap: .8rem; }
+    .marquee-row { display: flex; gap: .8rem; width: max-content; animation: marquee 44s linear infinite; }
+    .marquee-row.reverse { animation-direction: reverse; animation-duration: 54s; }
+    .marquee-row img { width: 320px; height: 220px; object-fit: cover; flex-shrink: 0; border-radius: 6px; transition: transform .4s; }
+    .marquee-row img:hover { transform: scale(1.015); }
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* TESTIMONIALS */
+    #recenze { background: var(--paper); }
+    .test-head { text-align: center; max-width: 560px; margin: 0 auto 3.5rem; }
+    .test-slider { position: relative; max-width: 860px; margin: 0 auto; overflow: hidden; }
+    .test-track { display: flex; transition: transform .7s var(--ease); }
+    .test-slide { min-width: 100%; padding: 3.5rem 3rem; text-align: center; }
+    .test-mark { font-family: 'Spectral', serif; font-size: 4rem; line-height: .5; color: var(--honey); height: 2rem; margin-bottom: 1.2rem; }
+    .test-stars { color: var(--honey); font-size: 1rem; letter-spacing: 5px; margin-bottom: 1.3rem; }
+    .test-quote { font-family: 'Spectral', serif; font-size: clamp(1.3rem, 2.2vw, 1.7rem); font-weight: 400; font-style: italic; line-height: 1.55; color: var(--pine); margin-bottom: 1.8rem; }
+    .test-author { font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--sage); }
+    .test-dots { display: flex; justify-content: center; gap: .6rem; margin-top: 2rem; }
+    .dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(195,154,91,.3); border: none; cursor: pointer; transition: all .3s; padding: 0; }
+    .dot.active { background: var(--honey); transform: scale(1.4); }
+
+    /* CONTACT / BOOKING */
+    #rezervace { background: var(--paper); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1.15fr; gap: 5.5rem; align-items: start; }
+    .contact-item { display: flex; gap: 1.3rem; align-items: flex-start; margin-bottom: 2.2rem; }
+    .contact-ico { width: 44px; height: 44px; flex-shrink: 0; border-radius: 50%; background: var(--sand); color: var(--pine); display: flex; align-items: center; justify-content: center; }
+    .contact-ico svg { width: 20px; height: 20px; }
+    .contact-label { font-size: .64rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--honey2); margin-bottom: .3rem; }
+    .contact-val { font-size: .96rem; color: var(--ink); line-height: 1.55; }
+    .map-wrap { margin-top: 1.5rem; width: 100%; height: 210px; background: var(--sand); overflow: hidden; border-radius: 6px; }
+    .map-wrap iframe { width: 100%; height: 100%; border: none; filter: grayscale(.2); }
+    .contact-form { display: flex; flex-direction: column; gap: 1rem; background: #fff; padding: 2.2rem; border-radius: 8px; box-shadow: 0 8px 30px rgba(47,64,52,.08); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: .45rem; }
+    .form-group label { font-size: .64rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+    .form-group input, .form-group textarea, .form-group select { background: var(--paper); border: 1px solid var(--line); padding: .9rem 1.1rem; border-radius: 8px; font-family: 'Figtree', sans-serif; font-size: .9rem; color: var(--ink); outline: none; transition: border-color .3s, box-shadow .3s; resize: none; }
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--honey); box-shadow: 0 0 0 3px rgba(195,154,91,.16); }
+    .form-group textarea { height: 100px; }
+    .form-submit { background: var(--pine); color: var(--cream); border: none; padding: 1.05rem 2.5rem; cursor: pointer; border-radius: 999px; font-family: 'Figtree', sans-serif; font-size: .8rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; transition: all .3s; }
+    .form-submit:hover { background: var(--pine2); box-shadow: 0 8px 22px rgba(47,64,52,.3); }
+
+    /* FOOTER */
+    footer { background: var(--pine2); padding: 5rem 8% 2.2rem; color: var(--cream); }
+    .footer-grid { display: grid; grid-template-columns: 1.8fr 1fr 1fr 1fr; gap: 4rem; padding-bottom: 3.5rem; border-bottom: 1px solid rgba(246,241,231,.12); margin-bottom: 2rem; }
+    .footer-logo { font-family: 'Spectral', serif; font-size: 1.7rem; font-weight: 600; color: var(--cream); text-decoration: none; display: block; margin-bottom: 1rem; }
+    .footer-logo span { color: var(--honey); }
+    .footer-desc { font-size: .84rem; color: rgba(246,241,231,.5); line-height: 1.8; margin-bottom: 1.5rem; }
+    .social-links { display: flex; gap: .7rem; }
+    .social-link { width: 38px; height: 38px; border-radius: 50%; border: 1px solid rgba(246,241,231,.18); display: flex; align-items: center; justify-content: center; color: rgba(246,241,231,.6); text-decoration: none; transition: all .3s; }
+    .social-link svg { width: 16px; height: 16px; }
+    .social-link:hover { border-color: var(--honey); color: var(--honey); }
+    .footer-col h4 { font-size: .68rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: rgba(246,241,231,.5); margin-bottom: 1.4rem; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: .7rem; }
+    .footer-col ul a { font-size: .84rem; color: rgba(246,241,231,.5); text-decoration: none; transition: color .25s; }
+    .footer-col ul a:hover { color: var(--honey); }
+    .footer-hours li { display: flex; justify-content: space-between; gap: 1rem; font-size: .8rem; color: rgba(246,241,231,.5); padding-bottom: .6rem; margin-bottom: .6rem; border-bottom: 1px solid rgba(246,241,231,.08); }
+    .footer-hours li:last-child { border-bottom: none; }
+    .footer-hours li span:last-child { color: rgba(246,241,231,.78); }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .footer-copy { font-size: .76rem; color: rgba(246,241,231,.32); }
+    .footer-copy a { color: var(--honey); text-decoration: none; }
+
+    #back-top { position: fixed; bottom: 2rem; right: 2rem; width: 44px; height: 44px; border-radius: 50%; background: var(--honey); color: var(--pine); border: none; cursor: pointer; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all .3s; z-index: 500; }
+    #back-top.show { opacity: 1; visibility: visible; }
+    #back-top:hover { background: #d3ab6d; transform: translateY(-2px); }
+
+    [data-r] { opacity: 0; transform: translateY(34px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
+    [data-r="left"] { transform: translateX(-34px); }
+    [data-r="right"] { transform: translateX(34px); }
+    [data-r].visible { opacity: 1; transform: none; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } [data-r] { opacity: 1 !important; transform: none !important; } }
+
+    @media (max-width: 1024px) {
+      section { padding: 5.5rem 6%; }
+      .hero-inner { padding: 0 6% 4.5rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 4rem; }
+      .about-figure img { height: 420px; }
+      .rooms-grid { grid-template-columns: 1fr; max-width: 460px; }
+      .okoli-grid { grid-template-columns: 1fr 1fr; }
+      .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 3rem; }
+    }
+    @media (max-width: 768px) {
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      #navbar { padding: 1.2rem 6%; }
+      .about-features { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .okoli-grid { grid-template-columns: 1fr; }
+      .stat-item { padding: 2.2rem; min-width: 140px; }
+      .footer-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .about-seal { left: 0; width: 96px; height: 96px; }
+    }
+    @media (max-width: 480px) { section { padding: 4.5rem 5%; } .hero-inner { padding: 0 5% 3.5rem; } .hero-btns { flex-direction: column; align-items: stretch; } .btn-solid, .btn-ghost { text-align: center; } }
+  </style>
+</head>
+<body>
+<div id="ukazka-banner" style="position:fixed;top:0;left:0;width:100%;background:#c39a5b;color:#2f4034;text-align:center;padding:10px;font-size:14px;font-weight:600;z-index:9999;box-sizing:border-box;">
+  ⚡ UKÁZKA – finální web bude s vašimi fotkami a texty
+</div>
+<style>body{margin-top:40px !important;}</style>
+
+<div id="progress"></div>
+
+<nav id="navbar">
+  <a href="#" class="nav-logo">Penzion Adéla<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#onas">O nás</a></li>
+    <li><a href="#pokoje">Pokoje</a></li>
+    <li><a href="#okoli">Okolí</a></li>
+    <li><a href="#recenze">Recenze</a></li>
+    <li><a href="#rezervace">Rezervace</a></li>
+  </ul>
+  <a href="#rezervace" class="nav-cta">Rezervovat</a>
+  <div class="hamburger" id="ham"><span></span><span></span><span></span></div>
+</nav>
+
+<div id="mobile-nav">
+  <button class="close-nav" id="close-nav">✕</button>
+  <a href="#onas">O nás</a>
+  <a href="#pokoje">Pokoje</a>
+  <a href="#okoli">Okolí</a>
+  <a href="#recenze">Recenze</a>
+  <a href="#rezervace">Rezervace</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-media"><img src="../stock_photos/photo_1.jpg" alt="Penzion Adéla" onerror="this.style.display='none'"></div>
+  <div class="hero-scrim"></div>
+  <div class="hero-inner">
+    <div class="hero-badge">Polička · Penzion</div>
+    <h1 class="hero-title">Pohodlné ubytování v srdci regionu</h1>
+    <p class="hero-sub">Rodinné ubytování s přátelskou atmosférou a krásným výhledem.</p>
+    <div class="hero-btns">
+      <a href="#rezervace" class="btn-solid">Rezervovat pobyt</a>
+      <a href="#pokoje" class="btn-ghost">Prohlédnout pokoje</a>
+    </div>
+    <div class="hero-status">
+      <div class="status-dot"></div>
+      <div class="hero-status-text"><strong>Volné termíny</strong>Rezervujte napřímo – bez provizí a poplatků</div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat-item" data-r><div class="stat-number"><span data-count="12">0</span></div><div class="stat-label">Útulných pokojů</div></div>
+  <div class="stat-item" data-r><div class="stat-number"><span data-count="15">0</span><span class="stat-suffix">+</span></div><div class="stat-label">Let pohostinství</div></div>
+  <div class="stat-item" data-r data-stat="reviews"><div class="stat-number"><span data-count="137">0</span><span class="stat-suffix">+</span></div><div class="stat-label">Recenzí na Googlu</div></div>
+  <div class="stat-item" data-r><div class="stat-number">4.8<span class="stat-suffix">★</span></div><div class="stat-label">Průměrné hodnocení</div></div>
+</div>
+
+<!-- ABOUT -->
+<section id="onas" data-r>
+  <div class="about-grid">
+    <div class="about-figure" data-r="left">
+      <img src="../stock_photos/photo_2.jpg" alt="Interiér – Penzion Adéla" onerror="this.style.visibility='hidden'">
+      <div class="about-frame"></div>
+      <div class="about-seal"><strong>♥</strong><span>Vítejte<br>u nás</span></div>
+    </div>
+    <div class="about-content" data-r="right">
+      <div class="eyebrow">Náš příběh</div>
+      <h2 class="title">Penzion Adéla<br>v <em>Polička</em></h2>
+      <p class="about-text">Věříme, že dobré ubytování je základ skvělého výletu. Proto se staráme o každý detail – od pohodlných postelí po domácí snídaně a tipy na nejhezčí místní trasy.</p>
+      <div class="about-features">
+        <div class="feat">
+          <div class="feat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v5M3 18h18M3 18v2M21 18v2M6 11V8a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v3"/></svg></div>
+          <div><h4>Útulné pokoje</h4><p>Čisté, klidné a pohodlné</p></div>
+        </div>
+        <div class="feat">
+          <div class="feat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-2M2 8h16v6a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4zM6 2v2M10 2v2M14 2v2"/></svg></div>
+          <div><h4>Domácí snídaně</h4><p>Z lokálních surovin každé ráno</p></div>
+        </div>
+        <div class="feat">
+          <div class="feat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11l1.5-4.5A2 2 0 0 1 8.4 5h7.2a2 2 0 0 1 1.9 1.5L19 11M5 11h14v5H5zM5 16v2M19 16v2"/><circle cx="7.5" cy="13.5" r="1"/><circle cx="16.5" cy="13.5" r="1"/></svg></div>
+          <div><h4>Parkování zdarma</h4><p>Přímo u penzionu</p></div>
+        </div>
+        <div class="feat">
+          <div class="feat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13a10 10 0 0 1 14 0M8.5 16.5a5 5 0 0 1 7 0M2 9.5a15 15 0 0 1 20 0"/><circle cx="12" cy="20" r="1"/></svg></div>
+          <div><h4>Wi-Fi zdarma</h4><p>Rychlé připojení v celém objektu</p></div>
+        </div>
+      </div>
+      <a href="#rezervace" class="btn-solid">Nezávazně poptat</a>
+    </div>
+  </div>
+</section>
+
+<!-- ROOMS -->
+<section id="pokoje">
+  <div class="rooms-head" data-r>
+    <div class="eyebrow center">Ubytování</div>
+    <h2 class="title">Naše <em>pokoje</em></h2>
+    <p class="lead" style="margin:0 auto;">Vyberte si pokoj podle svých představ. Rezervací napřímo u nás ušetříte za provize portálů.</p>
+  </div>
+  <div class="rooms-grid">
+    <div class="room-card" data-r>
+      <div class="room-photo"><img src="../stock_photos/photo_2.jpg" alt="Dvoulůžkový pokoj" loading="lazy" onerror="this.style.display='none'"><div class="room-price">od <strong>990 Kč</strong>/noc</div></div>
+      <div class="room-body">
+        <h3>Dvoulůžkový pokoj</h3>
+        <p>Útulný pokoj s manželskou postelí, ideální pro páry i jednotlivce.</p>
+        <div class="room-amen">
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 18v-5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v5M3 18h18M6 11V9a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2"/></svg>2 lůžka</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 13a10 10 0 0 1 14 0M8.5 16.5a5 5 0 0 1 7 0"/><circle cx="12" cy="20" r="1"/></svg>Wi-Fi</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M7 4v6M7 10a3 3 0 0 0 3 3h1v7M17 4c-1.5 0-2 3-2 5s.5 4 2 4"/></svg>Snídaně</span>
+        </div>
+      </div>
+    </div>
+    <div class="room-card" data-r>
+      <div class="room-photo"><img src="../stock_photos/photo_3.jpg" alt="Rodinný pokoj" loading="lazy" onerror="this.style.display='none'"><div class="room-price">od <strong>1 490 Kč</strong>/noc</div></div>
+      <div class="room-body">
+        <h3>Rodinný pokoj</h3>
+        <p>Prostorný pokoj až pro čtyři osoby s vlastní koupelnou a posezením.</p>
+        <div class="room-amen">
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 18v-5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v5M3 18h18M6 11V9a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2"/></svg>4 lůžka</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 13a10 10 0 0 1 14 0M8.5 16.5a5 5 0 0 1 7 0"/><circle cx="12" cy="20" r="1"/></svg>Wi-Fi</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 12h16v4a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3zM7 12V8a2 2 0 0 1 2-2h1"/></svg>Koupelna</span>
+        </div>
+      </div>
+    </div>
+    <div class="room-card" data-r>
+      <div class="room-photo"><img src="../stock_photos/photo_4.jpg" alt="Apartmá" loading="lazy" onerror="this.style.display='none'"><div class="room-price">od <strong>1 890 Kč</strong>/noc</div></div>
+      <div class="room-body">
+        <h3>Apartmá</h3>
+        <p>Náš nejkomfortnější pokoj s kuchyňským koutem a výhledem do okolí.</p>
+        <div class="room-amen">
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 18v-5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v5M3 18h18M6 11V9a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2"/></svg>2–3 lůžka</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 9l9-6 9 6v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/><path d="M9 21v-6h6v6"/></svg>Kuchyňka</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 13a10 10 0 0 1 14 0M8.5 16.5a5 5 0 0 1 7 0"/><circle cx="12" cy="20" r="1"/></svg>Wi-Fi</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="rooms-note"><a href="#rezervace" class="btn-solid" style="background:var(--pine);color:var(--cream);">Zjistit dostupnost</a></div>
+</section>
+
+<!-- OKOLÍ -->
+<section id="okoli">
+  <div class="okoli-head" data-r>
+    <div class="eyebrow center">Výlety &amp; atrakce</div>
+    <h2 class="title">Co podniknout <em>v okolí</em></h2>
+    <p class="lead" style="margin:0 auto;">Naše poloha je ideálním základem pro výlety. Rádi vám poradíme ty nejhezčí trasy a místa.</p>
+  </div>
+  <div class="okoli-grid">
+    <div class="okoli-card" data-r>
+      <div class="okoli-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20l6-14 5 8 2-4 5 10z"/></svg></div>
+      <h4>Příroda a turistika</h4>
+      <p>Značené trasy a vyhlídky v dosahu penzionu.</p>
+    </div>
+    <div class="okoli-card" data-r>
+      <div class="okoli-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M5.5 17.5l4-9h5l3 9M9 8h4"/></svg></div>
+      <h4>Cyklostezky</h4>
+      <p>Vyjížďky pro celou rodinu i náročnější trasy.</p>
+    </div>
+    <div class="okoli-card" data-r>
+      <div class="okoli-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"/></svg></div>
+      <h4>Památky</h4>
+      <p>Historická místa a zajímavosti nedaleko.</p>
+    </div>
+    <div class="okoli-card" data-r>
+      <div class="okoli-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3v8a3 3 0 0 0 6 0V3M10 11v10M17 3c-1.5 0-2 4-2 6s.5 4 2 4v8"/></svg></div>
+      <h4>Restaurace a služby</h4>
+      <p>Dobré jídlo a vše potřebné na dosah.</p>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="galerie">
+  <div class="gallery-head" data-r>
+    <div class="eyebrow center">Atmosféra</div>
+    <h2 class="title">Nahlédněte <em>k nám</em></h2>
+  </div>
+  <div class="marquee-wrap">
+    <div class="marquee-row" id="row1"></div>
+    <div class="marquee-row reverse" id="row2"></div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="recenze">
+  <div class="test-head" data-r>
+    <div class="eyebrow center">Hosté říkají</div>
+    <h2 class="title">Kde se hosté <em>rádi vracejí</em></h2>
+  </div>
+  <div class="test-slider" data-r>
+    <div class="test-track" id="test-track">
+      <div class="test-slide"><div class="test-mark">"</div><div class="test-stars">★★★★★</div><p class="test-quote">Nádherné ubytování v Polička. Čisté pokoje, výborná snídaně a milí hostitelé. Určitě se vrátíme.</p><div class="test-author">Petra K. · Polička</div></div>
+      <div class="test-slide"><div class="test-mark">"</div><div class="test-stars">★★★★★</div><p class="test-quote">Skvělý základ pro výlety do okolí. Klidné prostředí a péče, kterou dnes jinde nenajdete.</p><div class="test-author">Martin J. · Polička</div></div>
+      <div class="test-slide"><div class="test-mark">"</div><div class="test-stars">★★★★★</div><p class="test-quote">Rodinná atmosféra, pohodlné postele a snídaně jako od babičky. Vřele doporučujeme.</p><div class="test-author">Jana M. · Polička</div></div>
+      <div class="test-slide"><div class="test-mark">"</div><div class="test-stars">★★★★★</div><p class="test-quote">Rezervovali jsme napřímo a ušetřili. Personál nám poradil ty nejhezčí trasy v okolí.</p><div class="test-author">Tomáš B. · Polička</div></div>
+    </div>
+  </div>
+  <div class="test-dots" id="test-dots">
+    <button class="dot active" data-i="0"></button><button class="dot" data-i="1"></button><button class="dot" data-i="2"></button><button class="dot" data-i="3"></button>
+  </div>
+</section>
+
+<!-- BOOKING / CONTACT -->
+<section id="rezervace">
+  <div class="contact-grid">
+    <div data-r="left">
+      <div class="eyebrow">Rezervace</div>
+      <h2 class="title">Rezervujte pobyt<br>v <em>Polička</em></h2>
+      <div class="contact-info" style="margin-top:2rem;">
+        <div class="contact-item">
+          <div class="contact-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></div>
+          <div><div class="contact-label">Adresa</div><div class="contact-val">Hegerova 363, Polička, Horní Předměstí</div></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></div>
+          <div><div class="contact-label">Telefon</div><div class="contact-val">+420 773 232 222</div></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16v14H4zM4 10h16M8 3v4M16 3v4"/></svg></div>
+          <div><div class="contact-label">Check-in / Check-out</div><div class="contact-val">Příjezd od 14:00 · Odjezd do 10:00</div></div>
+        </div>
+      </div>
+      <div class="map-wrap"><iframe src="https://maps.google.com/maps?q=Hegerova+363%2C+Poli%C4%8Dka%2C+Horn%C3%AD+P%C5%99edm%C4%9Bst%C3%AD&output=embed" allowfullscreen loading="lazy" title="Mapa – Penzion Adéla"></iframe></div>
+    </div>
+    <div data-r="right">
+      <form class="contact-form" onsubmit="return false;">
+        <div class="form-row">
+          <div class="form-group"><label>Jméno</label><input type="text" placeholder="Vaše jméno"></div>
+          <div class="form-group"><label>Email</label><input type="email" placeholder="email@example.com"></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Příjezd</label><input type="date"></div>
+          <div class="form-group"><label>Odjezd</label><input type="date"></div>
+        </div>
+        <div class="form-group"><label>Počet osob</label>
+          <select><option>1 osoba</option><option>2 osoby</option><option>3 osoby</option><option>4 osoby</option><option>5 a více</option></select>
+        </div>
+        <div class="form-group"><label>Zpráva</label><textarea placeholder="Zvláštní přání, dotaz na dostupnost…"></textarea></div>
+        <button type="submit" class="form-submit">Odeslat poptávku</button>
+      </form>
+    </div>
+  </div>
+  <div style="text-align:center;margin:3rem 0 0;">
+    <a href="mailto:matyas.vrbaa@gmail.com?subject=Mám zájem o web – Penzion Adéla" style="display:inline-block;background:#c39a5b;color:#2f4034;border-radius:999px;padding:15px 40px;font-size:17px;text-decoration:none;font-weight:700;">Chci takový web</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="#" class="footer-logo">Penzion Adéla<span>.</span></a>
+      <p class="footer-desc">Pohodlné ubytování s přátelskou péčí.</p>
+      <div class="social-links">
+        <a href="#" class="social-link" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 9h3V6h-3c-1.7 0-3 1.3-3 3v2H9v3h2v6h3v-6h2.5l.5-3H14V9z"/></svg></a>
+        <a href="#" class="social-link" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Navigace</h4>
+      <ul><li><a href="#onas">O nás</a></li><li><a href="#pokoje">Pokoje</a></li><li><a href="#okoli">Okolí</a></li><li><a href="#recenze">Recenze</a></li><li><a href="#rezervace">Rezervace</a></li></ul>
+    </div>
+    <div class="footer-col">
+      <h4>Recepce</h4>
+      <ul class="footer-hours"><li><span>Check-in</span><span>14:00–20:00</span></li><li><span>Check-out</span><span>do 10:00</span></li><li><span>Recepce</span><span>denně</span></li></ul>
+    </div>
+    <div class="footer-col">
+      <h4>Kontakt</h4>
+      <ul><li><a href="#">Hegerova 363</a></li><li><a href="tel:+420 773 232 222">+420 773 232 222</a></li><li><a href="#">petra.vomackova@seznam.cz</a></li></ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2026 Penzion Adéla · Vytvořeno s ❤️ od <a href="https://strankyprovas.cz">StránkyProVás</a></p>
+    <p class="footer-copy">Všechna práva vyhrazena</p>
+  </div>
+</footer>
+
+<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Nahoru">↑</button>
+
+<script>
+window.addEventListener('scroll', () => {
+  const s = window.scrollY, h = document.documentElement.scrollHeight - innerHeight;
+  document.getElementById('progress').style.transform = `scaleX(${s/h})`;
+  document.getElementById('navbar').classList.toggle('scrolled', s > 60);
+  document.getElementById('back-top').classList.toggle('show', s > 400);
+}, {passive:true});
+
+const ham = document.getElementById('ham'), mNav = document.getElementById('mobile-nav');
+ham.addEventListener('click', () => mNav.classList.add('open'));
+document.getElementById('close-nav').addEventListener('click', () => mNav.classList.remove('open'));
+mNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mNav.classList.remove('open')));
+
+document.querySelectorAll('a[href^="#"]').forEach(a => { a.addEventListener('click', e => { const el = document.querySelector(a.getAttribute('href')); if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth'}); } }); });
+
+const revObs = new IntersectionObserver(es => { es.forEach((e,i) => { if(e.isIntersecting){ setTimeout(() => e.target.classList.add('visible'), i*70); revObs.unobserve(e.target); } }); }, {threshold:.12});
+document.querySelectorAll('[data-r]').forEach(el => revObs.observe(el));
+
+function animCount(el, target){ const dur=2000, start=performance.now(); const tick=now=>{ const p=Math.min((now-start)/dur,1), e=1-Math.pow(1-p,3); el.textContent=Math.floor(e*target).toLocaleString('cs'); if(p<1) requestAnimationFrame(tick); }; requestAnimationFrame(tick); }
+document.querySelectorAll('[data-stat="reviews"]').forEach(item => { const sp=item.querySelector('[data-count]'); if(!sp || !(+sp.dataset.count>0)) item.style.display='none'; });
+const cntObs = new IntersectionObserver(es => { es.forEach(e => { if(e.isIntersecting){ const n=+e.target.dataset.count; if(n) animCount(e.target,n); cntObs.unobserve(e.target); } }); }, {threshold:.5});
+document.querySelectorAll('[data-count]').forEach(el => cntObs.observe(el));
+
+const photos = ['../stock_photos/photo_1.jpg','../stock_photos/photo_2.jpg','../stock_photos/photo_3.jpg','../stock_photos/photo_4.jpg','../stock_photos/photo_5.jpg'].filter(s => s && s.length);
+const rows = [document.getElementById('row1'), document.getElementById('row2')];
+if(photos.length > 0){ rows.forEach(row => { [...photos,...photos,...photos,...photos].forEach(src => { const img=document.createElement('img'); img.src=src; img.alt='Galerie'; img.loading='lazy'; img.onerror=function(){ this.remove(); }; row.appendChild(img); }); }); }
+else { document.getElementById('galerie').style.display='none'; }
+
+let cur=0; const track=document.getElementById('test-track'), dots=document.querySelectorAll('.dot'), slides=track.querySelectorAll('.test-slide');
+function goTo(n){ cur=n; track.style.transform=`translateX(-${n*100}%)`; dots.forEach((d,i)=>d.classList.toggle('active',i===n)); }
+dots.forEach(d => d.addEventListener('click', () => goTo(+d.dataset.i)));
+setInterval(() => goTo((cur+1)%slides.length), 5000);
+</script>
+</body>
+</html>
