@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kontakt a rezervace — Ubytování Dyje, penzion u Znojma</title>
+<meta name="description" content="Kontakt na penzion Ubytování Dyje — Dyje 539 u Znojma, tel. 737 111 321, info@ubytovanidyje.cz. On-line rezervace ubytování.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@500;600;700&family=Figtree:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="strip"><div class="container">
+  <span>📞 <a href="tel:+420737111321">737 111 321</a> · <a href="tel:+420737111322">737 111 322</a></span>
+  <span>✉️ <a href="mailto:info@ubytovanidyje.cz">info@ubytovanidyje.cz</a> &nbsp;·&nbsp; Dyje 539, u Znojma</span>
+</div></div>
+
+<header><div class="container"><nav class="main">
+  <a class="brand" href="index.html"><span class="mark">D</span><span><b>Ubytování Dyje</b><span>penzion · Znojemsko</span></span></a>
+  <label class="hamburger" for="nav-toggle">☰</label>
+  <input type="checkbox" id="nav-toggle">
+  <div class="navlinks">
+    <a href="index.html">Úvod</a>
+    <a href="pokoje.html">Pokoje</a>
+    <a href="cenik.html">Ceník</a>
+    <a href="degustace.html">Degustace</a>
+    <a href="fotogalerie.html">Fotogalerie</a>
+    <a href="soustredeni.html">Soustředění</a>
+    <a href="kontakt.html" class="active">Kontakt</a>
+    <a href="#rezervace" class="cta">Rezervace</a>
+  </div>
+</nav></div></header>
+
+<section class="hero small">
+  <div class="bg" style="background-image:url('photos/terasa-4.jpg')"></div>
+  <div class="veil"></div>
+  <div class="inner">
+    <span class="kicker">Jsme tu pro vás</span>
+    <h1>Kontakt a rezervace</h1>
+    <p class="lead">Zavolejte, napište, nebo rovnou pošlete nezávaznou rezervaci — ozveme se obratem.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container grid g4">
+    <div class="feature"><span class="ico">📍</span><div><b>Adresa</b><p>Ubytování Dyje<br>Dyje ev. č. 539<br>669 02 Dyje</p></div></div>
+    <div class="feature"><span class="ico">📞</span><div><b>Telefony</b><p><a href="tel:+420737111321">+420 737 111 321</a><br><a href="tel:+420737111322">+420 737 111 322</a></p></div></div>
+    <div class="feature"><span class="ico">✉️</span><div><b>E-mail</b><p><a href="mailto:info@ubytovanidyje.cz">info@ubytovanidyje.cz</a></p></div></div>
+    <div class="feature"><span class="ico">🧭</span><div><b>GPS</b><p>48.847153N<br>16.113011E</p></div></div>
+  </div>
+</section>
+
+<section class="section tint">
+  <div class="container">
+    <div class="sec-head"><h2>Kde nás najdete</h2><p>Obec Dyje leží 5 minut od Znojma, na kraji národního parku Podyjí.</p></div>
+    <div style="border-radius:14px;overflow:hidden;box-shadow:var(--shadow);border:1px solid var(--line)">
+      <iframe title="Mapa — Ubytování Dyje" src="https://www.openstreetmap.org/export/embed.html?bbox=16.083%2C48.833%2C16.143%2C48.861&amp;layer=mapnik&amp;marker=48.847153%2C16.113011" style="width:100%;height:420px;border:0;display:block"></iframe>
+    </div>
+    <p class="center" style="margin-top:.7rem;font-size:.85rem"><a href="https://mapy.cz/turisticka?q=48.847153N%2C16.113011E" target="_blank" rel="noopener">Otevřít v Mapy.cz →</a></p>
+  </div>
+</section>
+
+<section class="section" id="rezervace">
+  <div class="container">
+    <div class="sec-head">
+      <span class="kicker">Nezávazně a bez provizí portálům</span>
+      <h2>On-line rezervace ubytování</h2>
+      <p>Vyplňte termín a počet osob — dostupnost potvrdíme obratem. Dokončením rezervace souhlasíte s ubytovacím řádem našeho zařízení.</p>
+    </div>
+    <form class="res" onsubmit="event.preventDefault();this.querySelector('.form-ok').style.display='block';this.reset();">
+      <div><label for="r-jmeno">Vaše jméno *</label><input id="r-jmeno" required placeholder="Jan Novák"></div>
+      <div><label for="r-mail">E-mail *</label><input id="r-mail" type="email" required placeholder="jan@email.cz"></div>
+      <div><label for="r-tel">Telefon *</label><input id="r-tel" type="tel" required placeholder="+420"></div>
+      <div><label for="r-pokoj">Preferovaný pokoj</label>
+        <select id="r-pokoj">
+          <option>Nechám na vás</option>
+          <option>Pokoj č. 1 (2 lůžka)</option>
+          <option>Pokoj č. 2 (5 lůžek)</option>
+          <option>Pokoj č. 3 (7 lůžek)</option>
+          <option>Pokoj č. 4 (4 lůžka)</option>
+          <option>Pokoj č. 5 (4–6 lůžek)</option>
+          <option>Pokoj č. 6 (4 lůžka)</option>
+          <option>Celý penzion / více pokojů</option>
+        </select>
+      </div>
+      <div><label for="r-od">Datum příjezdu *</label><input id="r-od" type="date" required></div>
+      <div><label for="r-do">Datum odjezdu *</label><input id="r-do" type="date" required></div>
+      <div><label for="r-dosp">Počet dospělých *</label><input id="r-dosp" type="number" min="1" value="2" required></div>
+      <div><label for="r-deti">Počet dětí</label><input id="r-deti" type="number" min="0" value="0"></div>
+      <div class="full"><label for="r-pozn">Další přání a upřesnění</label><textarea id="r-pozn" rows="4" placeholder="Např. zájem o degustaci, pozdější příjezd…"></textarea></div>
+      <div class="full form-ok">✅ Děkujeme! Vaše poptávka je odeslána — ozveme se vám co nejdříve. <em>(V ukázce se formulář neodesílá; v ostré verzi přijde rezervace přímo na váš e-mail.)</em></div>
+      <div class="full center"><button class="btn" type="submit">Odeslat nezávaznou rezervaci</button></div>
+    </form>
+  </div>
+</section>
+
+<footer><div class="container">
+  <div class="fgrid">
+    <div>
+      <h4>Ubytování Dyje</h4>
+      <p>Rodinný penzion na kraji národního parku Podyjí. Pokoje s vlastní koupelnou a kuchyňkou, vinný sklep, krytá terasa s udírnou a zázemí pro cyklisty.</p>
+    </div>
+    <div>
+      <h4>Rychlé odkazy</h4>
+      <p><a href="pokoje.html">Pokoje</a><br><a href="cenik.html">Ceník</a><br><a href="degustace.html">Akce a degustace</a><br><a href="soustredeni.html">Fotbalová soustředění</a><br><a href="fotogalerie.html">Fotogalerie</a></p>
+    </div>
+    <div>
+      <h4>Kontakt</h4>
+      <p>Dyje ev. č. 539, 669 02 Dyje<br>📞 <a href="tel:+420737111321">737 111 321</a> · <a href="tel:+420737111322">737 111 322</a><br>✉️ <a href="mailto:info@ubytovanidyje.cz">info@ubytovanidyje.cz</a><br>GPS: 48.847153N, 16.113011E</p>
+    </div>
+  </div>
+  <div class="fnote">
+    <span>© 2026 Ubytování Dyje — penzion u Znojma</span>
+    <span>Ukázka nového webu · připravilo <a href="https://strankyprovas.cz">StránkyProVás</a></span>
+  </div>
+</div></footer>
+
+</body>
+</html>
