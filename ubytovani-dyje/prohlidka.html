@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Virtuální prohlídka — Ubytování Dyje, penzion u Znojma</title>
+<meta name="description" content="Prohlédněte si pokoje penzionu Ubytování Dyje ve virtuální 360° prohlídce.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@500;600;700&family=Figtree:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  .vr-stage{position:relative;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);border:1px solid var(--line);background:#111}
+  #container{width:100%;height:min(72vh,640px)}
+  .vr-switch{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center;margin:1.4rem 0 0}
+  .vr-switch a{padding:.55rem 1rem;border-radius:999px;border:1.5px solid var(--line);background:#fff;font-weight:600;font-size:.9rem}
+  .vr-switch a.on{background:var(--pine);color:#f3ecd9;border-color:var(--pine)}
+  .vr-hint{text-align:center;color:var(--muted);font-size:.88rem;margin-top:.8rem}
+</style>
+</head>
+<body>
+
+<div class="strip"><div class="container">
+  <span>📞 <a href="tel:+420737111321">737 111 321</a> · <a href="tel:+420737111322">737 111 322</a></span>
+  <span>✉️ <a href="mailto:info@ubytovanidyje.cz">info@ubytovanidyje.cz</a> &nbsp;·&nbsp; Dyje 539, u Znojma</span>
+</div></div>
+
+<header><div class="container"><nav class="main">
+  <a class="brand" href="index.html"><span class="mark">D</span><span><b>Ubytování Dyje</b><span>penzion · Znojemsko</span></span></a>
+  <label class="hamburger" for="nav-toggle">☰</label>
+  <input type="checkbox" id="nav-toggle">
+  <div class="navlinks">
+    <a href="index.html">Úvod</a>
+    <a href="pokoje.html" class="active">Pokoje</a>
+    <a href="cenik.html">Ceník</a>
+    <a href="degustace.html">Degustace</a>
+    <a href="fotogalerie.html">Fotogalerie</a>
+    <a href="soustredeni.html">Soustředění</a>
+    <a href="kontakt.html">Kontakt</a>
+    <a href="kontakt.html#rezervace" class="cta">Rezervace</a>
+  </div>
+</nav></div></header>
+
+<section class="section">
+  <div class="container">
+    <div class="sec-head" style="margin-bottom:1.6rem">
+      <span class="kicker">360° prohlídka</span>
+      <h2 id="vr-title">Virtuální prohlídka</h2>
+      <p>Rozhlédněte se tažením myší nebo prstem, kolečkem přibližujete. Dvojklik přepne celou obrazovku.</p>
+    </div>
+    <div class="vr-stage">
+      <div id="container">Ke spuštění virtuální prohlídky je zapotřebí HTML5/CSS3 a WebGL.</div>
+    </div>
+    <div class="vr-switch" id="vr-switch"></div>
+    <p class="vr-hint">← <a href="pokoje.html">Zpět na pokoje</a></p>
+  </div>
+</section>
+
+<footer><div class="container">
+  <div class="fnote" style="border-top:0;margin-top:0;padding-top:0">
+    <span>© 2026 Ubytování Dyje — penzion u Znojma</span>
+    <span>Ukázka nového webu · připravilo <a href="https://strankyprovas.cz">StránkyProVás</a></span>
+  </div>
+</div></footer>
+
+<script src="vr/pano2vr_player.js"></script>
+<script src="vr/skin.js"></script>
+<script>
+  var MISTA = [
+    ["pokoj1", "Pokoj č. 1"],
+    ["pokoj2", "Pokoj č. 2"],
+    ["pokoj3", "Pokoj č. 3"],
+    ["pokoj4", "Pokoj č. 4"],
+    ["pokoj5", "Pokoj č. 5"],
+    ["pokoj6", "Pokoj č. 6"],
+    ["spolecenska", "Společenská místnost"]
+  ];
+  var p = new URLSearchParams(location.search).get("p") || "pokoj1";
+  var platne = MISTA.some(function (m) { return m[0] === p; });
+  if (!platne) p = "pokoj1";
+
+  var nazev = MISTA.filter(function (m) { return m[0] === p; })[0][1];
+  document.getElementById("vr-title").textContent = "Virtuální prohlídka — " + nazev;
+  document.title = "Virtuální prohlídka " + nazev + " — Ubytování Dyje";
+
+  var sw = document.getElementById("vr-switch");
+  MISTA.forEach(function (m) {
+    var a = document.createElement("a");
+    a.href = "prohlidka.html?p=" + m[0];
+    a.textContent = m[1];
+    if (m[0] === p) a.className = "on";
+    sw.appendChild(a);
+  });
+
+  var pano = new pano2vrPlayer("container");
+  var skin = new pano2vrSkin(pano);
+  pano.readConfigUrl("vr/dyje_" + p + ".xml");
+</script>
+
+</body>
+</html>
