@@ -788,7 +788,62 @@
       .contact { padding: 48px 0; }
       footer { padding: 36px 0 20px; }
     }
-  </style>
+  
+/* ===== GALERIE ===== */
+.gallery{padding:96px 0;background:var(--bg-warm)}
+.gal-header{max-width:640px;margin:0 0 34px}
+.gal-header h2{margin:6px 0 10px}
+.gal-header p{color:var(--muted);margin:0}
+.gal-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+  gap:14px;
+}
+.gal-item{
+  margin:0;position:relative;overflow:hidden;cursor:zoom-in;
+  border-radius:var(--radius);box-shadow:var(--shadow-soft);
+  aspect-ratio:4/3;background:#e8ddd0;
+}
+.gal-item img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease}
+.gal-item:hover img{transform:scale(1.05)}
+.gal-item::after{
+  content:attr(data-popis);
+  position:absolute;left:0;right:0;bottom:0;padding:26px 12px 10px;
+  font-size:.78rem;line-height:1.3;color:#fff;
+  background:linear-gradient(transparent,rgba(20,14,8,.78));
+  opacity:0;transition:opacity .3s ease;
+}
+.gal-item:hover::after{opacity:1}
+/* každá pátá dlaždice přes dva sloupce – ať mřížka nevypadá jako tabulka */
+.gal-grid .gal-item:nth-child(7n+1){grid-column:span 2;aspect-ratio:8/5}
+@media(max-width:640px){
+  .gal-grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+  .gal-grid .gal-item:nth-child(7n+1){grid-column:span 2}
+}
+
+/* lightbox */
+.gal-box{
+  position:fixed;inset:0;z-index:120;display:flex;align-items:center;justify-content:center;
+  background:rgba(16,11,6,.94);padding:24px;
+}
+.gal-box[hidden]{display:none}
+.gal-box-in{margin:0;max-width:min(1100px,92vw);max-height:88vh;display:flex;flex-direction:column;gap:12px}
+.gal-box-in img{max-width:100%;max-height:78vh;object-fit:contain;border-radius:10px;display:block;margin:0 auto}
+.gal-box-in figcaption{color:rgba(255,255,255,.82);font-size:.85rem;text-align:center}
+.gal-zavrit,.gal-sip{
+  position:absolute;background:rgba(255,255,255,.1);color:#fff;border:0;cursor:pointer;
+  width:46px;height:46px;border-radius:50%;font-size:28px;line-height:1;
+  display:flex;align-items:center;justify-content:center;transition:background .2s;
+}
+.gal-zavrit:hover,.gal-sip:hover{background:rgba(255,255,255,.24)}
+.gal-zavrit{top:20px;right:20px}
+.gal-sip--vlevo{left:20px;top:50%;transform:translateY(-50%)}
+.gal-sip--vpravo{right:20px;top:50%;transform:translateY(-50%)}
+@media(max-width:640px){
+  .gal-sip{width:38px;height:38px;font-size:22px}
+  .gal-sip--vlevo{left:8px}.gal-sip--vpravo{right:8px}
+}
+</style>
 </head>
 <body>
 <!-- ===== NAV ===== -->
@@ -799,7 +854,8 @@
       <div class="nav-links">
         <a href="#pokoje">Pokoje</a>
         <a href="#onas">O nás</a>
-        <a href="#okoli">Okolí</a>
+        <a href="#galerie">Galerie</a>
+          <a href="#okoli">Okolí</a>
         <a href="#cenik">Ceník</a>
         <a href="#kontakt">Kontakt</a>
       </div>
@@ -999,6 +1055,88 @@
   </div>
 </section>
 
+
+<!-- ===== GALERIE ===== -->
+<section class="gallery" id="galerie">
+  <div class="container">
+    <div class="gal-header" data-r>
+      <div class="kicker">Fotogalerie</div>
+      <h2>Podívejte se k nám</h2>
+      <p>Všechny fotky jsou z penzionu — pokoje, apartmán i budova. Kliknutím si je zvětšíte.</p>
+    </div>
+    <div class="gal-grid" id="galMrizka" data-r>
+        <figure class="gal-item" data-gal="0" data-popis="Pokoj č. 2">
+          <img src="photos/lada-01-pokoj-c-2.jpg" alt="Pokoj č. 2" loading="lazy" decoding="async">
+        </figure>
+        <figure class="gal-item" data-gal="1" data-popis="Apartmán v 1.patře má 2 ložnice až pro 3 osoby,s balkonem a malou kuchyňkou · Apartmán v 1. patře">
+          <img src="photos/lada-02-apartman-v-1-patre.jpg" alt="Apartmán v 1.patře má 2 ložnice až pro 3 osoby,s balkonem a malou kuchyňkou · Apartmán v 1. patře" loading="lazy" decoding="async">
+        </figure>
+        <figure class="gal-item" data-gal="2" data-popis="Apartmán v 1. patře">
+          <img src="photos/lada-03-apartman-v-1-patre.jpg" alt="Apartmán v 1. patře" loading="lazy" decoding="async">
+        </figure>
+        <figure class="gal-item" data-gal="3" data-popis="Apartmán v 1. patře">
+          <img src="photos/lada-04-apartman-v-1-patre.jpg" alt="Apartmán v 1. patře" loading="lazy" decoding="async">
+        </figure>
+        <figure class="gal-item" data-gal="4" data-popis="Jídelní a obývací část · Pokoj č. 8">
+          <img src="photos/lada-05-pokoj-c-8.jpg" alt="Jídelní a obývací část · Pokoj č. 8" loading="lazy" decoding="async">
+        </figure>
+        <figure class="gal-item" data-gal="5" data-popis="Jídelní a obývací část · Pokoj č. 8">
+          <img src="photos/lada-06-pokoj-c-8.jpg" alt="Jídelní a obývací část · Pokoj č. 8" loading="lazy" decoding="async">
+        </figure>
+        <figure class="gal-item" data-gal="6" data-popis="Pokoj č. 2">
+          <img src="photos/lada-07-pokoj-c-2.jpg" alt="Pokoj č. 2" loading="lazy" decoding="async">
+        </figure>
+        <figure class="gal-item" data-gal="7" data-popis="Vstup do apartmánu · Pokoj č. 8">
+          <img src="photos/lada-08-pokoj-c-8.jpg" alt="Vstup do apartmánu · Pokoj č. 8" loading="lazy" decoding="async">
+        </figure>
+        <figure class="gal-item" data-gal="8" data-popis="Ložnice · Pokoj č. 8">
+          <img src="photos/lada-09-pokoj-c-8.jpg" alt="Ložnice · Pokoj č. 8" loading="lazy" decoding="async">
+        </figure>
+        <figure class="gal-item" data-gal="9" data-popis="Ložnice · Pokoj č. 8">
+          <img src="photos/lada-10-pokoj-c-8.jpg" alt="Ložnice · Pokoj č. 8" loading="lazy" decoding="async">
+        </figure>
+        <figure class="gal-item" data-gal="10" data-popis="Pokoj č. 8">
+          <img src="photos/lada-11-pokoj-c-8.jpg" alt="Pokoj č. 8" loading="lazy" decoding="async">
+        </figure>
+        <figure class="gal-item" data-gal="11" data-popis="Koupelna · Pokoj č. 8">
+          <img src="photos/lada-12-pokoj-c-8.jpg" alt="Koupelna · Pokoj č. 8" loading="lazy" decoding="async">
+        </figure>
+        <figure class="gal-item" data-gal="12" data-popis="Ložnice · Pokoj č. 9">
+          <img src="photos/lada-13-pokoj-c-9.jpg" alt="Ložnice · Pokoj č. 9" loading="lazy" decoding="async">
+        </figure>
+        <figure class="gal-item" data-gal="13" data-popis="Předsíň · Pokoj č. 9">
+          <img src="photos/lada-14-pokoj-c-9.jpg" alt="Předsíň · Pokoj č. 9" loading="lazy" decoding="async">
+        </figure>
+        <figure class="gal-item" data-gal="14" data-popis="Koupelna · Pokoj č. 9">
+          <img src="photos/lada-15-pokoj-c-9.jpg" alt="Koupelna · Pokoj č. 9" loading="lazy" decoding="async">
+        </figure>
+        <figure class="gal-item" data-gal="15" data-popis="Pokoj č. 2">
+          <img src="photos/lada-16-pokoj-c-2.jpg" alt="Pokoj č. 2" loading="lazy" decoding="async">
+        </figure>
+        <figure class="gal-item" data-gal="16" data-popis="Hlavní budova · Penzion a interiér">
+          <img src="photos/lada-17-penzion-a-interier.jpg" alt="Hlavní budova · Penzion a interiér" loading="lazy" decoding="async">
+        </figure>
+        <figure class="gal-item" data-gal="17" data-popis="Penzion a interiér">
+          <img src="photos/lada-18-penzion-a-interier.jpg" alt="Penzion a interiér" loading="lazy" decoding="async">
+        </figure>
+        <figure class="gal-item" data-gal="18" data-popis="Pokoj č. 2">
+          <img src="photos/lada-19-pokoj-c-2.jpg" alt="Pokoj č. 2" loading="lazy" decoding="async">
+        </figure>
+    </div>
+  </div>
+</section>
+
+<!-- lightbox galerie -->
+<div class="gal-box" id="galBox" role="dialog" aria-modal="true" aria-label="Zvětšená fotka" hidden>
+  <button class="gal-zavrit" id="galZavrit" type="button" aria-label="Zavřít">&times;</button>
+  <button class="gal-sip gal-sip--vlevo" id="galVlevo" type="button" aria-label="Předchozí">&#8249;</button>
+  <figure class="gal-box-in">
+    <img id="galObr" src="" alt="">
+    <figcaption id="galPopis"></figcaption>
+  </figure>
+  <button class="gal-sip gal-sip--vpravo" id="galVpravo" type="button" aria-label="Další">&#8250;</button>
+</div>
+
 <!-- ===== OKOLÍ ===== -->
 <section class="around" id="okoli">
   <div class="container">
@@ -1191,6 +1329,41 @@
     const cards = Array.from(track.children);
     cards.forEach(card => track.appendChild(card.cloneNode(true)));
   }
+
+  /* ===== GALERIE – lightbox bez knihovny ===== */
+  (function(){
+    var mrizka = document.getElementById('galMrizka');
+    if (!mrizka) return;
+    var box    = document.getElementById('galBox');
+    var obr    = document.getElementById('galObr');
+    var popis  = document.getElementById('galPopis');
+    var polozky = Array.prototype.slice.call(mrizka.querySelectorAll('.gal-item'));
+    var index = 0;
+
+    function ukaz(i){
+      if (i < 0) i = polozky.length - 1;
+      if (i >= polozky.length) i = 0;
+      index = i;
+      var f = polozky[i];
+      obr.src = f.querySelector('img').getAttribute('src');
+      obr.alt = f.getAttribute('data-popis') || '';
+      popis.textContent = f.getAttribute('data-popis') || '';
+    }
+    function otevri(i){ ukaz(i); box.hidden = false; document.body.style.overflow = 'hidden'; }
+    function zavri(){ box.hidden = true; document.body.style.overflow = ''; obr.src = ''; }
+
+    polozky.forEach(function(f, i){ f.addEventListener('click', function(){ otevri(i); }); });
+    document.getElementById('galZavrit').addEventListener('click', zavri);
+    document.getElementById('galVlevo').addEventListener('click', function(e){ e.stopPropagation(); ukaz(index - 1); });
+    document.getElementById('galVpravo').addEventListener('click', function(e){ e.stopPropagation(); ukaz(index + 1); });
+    box.addEventListener('click', function(e){ if (e.target === box) zavri(); });
+    document.addEventListener('keydown', function(e){
+      if (box.hidden) return;
+      if (e.key === 'Escape') zavri();
+      if (e.key === 'ArrowLeft') ukaz(index - 1);
+      if (e.key === 'ArrowRight') ukaz(index + 1);
+    });
+  })();
 </script>
 
 </body>
