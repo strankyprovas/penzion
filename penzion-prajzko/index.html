@@ -101,6 +101,45 @@ a{color:inherit}
 .pokoj li{font-size:.78rem;font-weight:600;background:var(--bila);border:1px solid var(--linka);border-radius:999px;padding:5px 13px;color:var(--mut)}
 .pokoje-note{margin-top:26px;color:var(--mut);font-size:.92rem;text-align:center}
 
+/* pokoj foto */
+.pokoj{padding:0 0 26px}
+.pokoj-img{width:100%;height:190px;object-fit:cover;border-radius:var(--r) var(--r) 0 0;display:block}
+.pokoj-in{padding:24px 30px 0}
+
+/* galerie pás */
+.gpas{overflow:hidden;padding:70px 0 0}
+.gpas-track{display:flex;gap:14px;width:max-content;animation:gpas 38s linear infinite}
+.gpas img{width:300px;height:210px;object-fit:cover;border-radius:14px}
+@keyframes gpas{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* sezóny */
+.sezony{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:52px;border:1px solid var(--linka);border-radius:var(--r);overflow:hidden;background:var(--bila)}
+.sez{padding:32px 26px;border-right:1px solid var(--linka);transition:.3s}
+.sez:last-child{border-right:0}
+.sez:hover{background:var(--papir)}
+.sez .ic{font-size:1.5rem;display:block;margin-bottom:10px}
+.sez h3{font-size:1.25rem;margin-bottom:8px;color:var(--smrk)}
+.sez p{color:var(--mut);font-size:.92rem}
+
+/* recenze */
+#recenze{background:var(--bila);border-top:1px solid var(--linka);border-bottom:1px solid var(--linka)}
+.test-wrap{max-width:780px;margin:44px auto 0;overflow:hidden;position:relative}
+#test-track{display:flex;transition:transform .5s ease}
+.test-i{min-width:100%;text-align:center;padding:0 18px}
+.hvezdy{color:var(--okr);letter-spacing:5px;margin-bottom:18px}
+.test-i p{font-family:'Fraunces',serif;font-style:italic;font-size:clamp(1.2rem,2.3vw,1.55rem);line-height:1.5;margin-bottom:18px}
+.test-i cite{font-style:normal;font-size:.8rem;color:var(--mut);letter-spacing:.16em;text-transform:uppercase;font-weight:700}
+#test-dots{display:flex;gap:8px;justify-content:center;margin-top:26px}
+#test-dots button{width:26px;height:4px;border-radius:2px;border:0;background:var(--linka);cursor:pointer;padding:0;transition:.3s}
+#test-dots button.on{background:var(--okr)}
+
+/* jak k nám */
+.cesta{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:44px}
+.cesta-i{background:var(--bila);border:1px solid var(--linka);border-radius:var(--r);padding:28px}
+.cesta-i .ic{font-size:1.4rem;display:block;margin-bottom:10px}
+.cesta-i b{font-family:'Fraunces',serif;font-size:1.1rem;display:block;margin-bottom:6px}
+.cesta-i span{color:var(--mut);font-size:.92rem}
+
 /* restaurace */
 #restaurace .wrap{display:grid;grid-template-columns:.95fr 1.05fr;gap:64px;align-items:center}
 #restaurace img{width:100%;height:440px;object-fit:cover;border-radius:var(--r)}
@@ -180,6 +219,9 @@ footer{background:var(--smrk2);color:var(--papir);padding:60px 0 26px}
   .pasek-in{grid-template-columns:1fr 1fr}
   .pasek-i:nth-child(2n){border-right:0}
   .pokoje-grid{grid-template-columns:1fr}
+  .sezony{grid-template-columns:1fr 1fr}
+  .sez{border-bottom:1px solid var(--linka)}
+  .cesta{grid-template-columns:1fr}
   .vylety{grid-template-columns:1fr}
   .prak{grid-template-columns:1fr 1fr}
   .footer-grid{grid-template-columns:1fr}
@@ -278,33 +320,53 @@ footer{background:var(--smrk2);color:var(--papir);padding:60px 0 26px}
     </div>
     <div class="pokoje-grid">
       <div class="pokoj" data-r>
+        <img class="pokoj-img" src="../stock_photos/photo_2.jpg" alt="Dvoulůžkový pokoj – ilustrační" onerror="this.remove()">
+        <div class="pokoj-in">
         <span class="typ">Standard</span>
         <h3>Dvoulůžkový pokoj</h3>
         <p>Útulný pokoj pro dva — ideální základna pro výlety po skalních městech.</p>
         <ul><li>vlastní koupelna</li><li>TV se satelitem</li><li>Wi-Fi</li><li>trezor</li></ul>
+        </div>
       </div>
       <div class="pokoj" data-r>
+        <img class="pokoj-img" src="../stock_photos/photo_3.jpg" alt="Třílůžkový pokoj – ilustrační" onerror="this.remove()">
+        <div class="pokoj-in">
         <span class="typ">Standard</span>
         <h3>Třílůžkový pokoj</h3>
         <p>Prostorný pokoj pro rodinu či partu — s možností přistýlky.</p>
         <ul><li>vlastní koupelna</li><li>TV se satelitem</li><li>Wi-Fi</li><li>přistýlka</li></ul>
+        </div>
       </div>
       <div class="pokoj" data-r>
+        <img class="pokoj-img" src="../stock_photos/photo_4.jpg" alt="Pokoj s terasou – ilustrační" onerror="this.remove()">
+        <div class="pokoj-in">
         <span class="typ">Komfort</span>
         <h3>Pokoj s terasou</h3>
         <p>Pokoje komfort s terasou a výhledem na krajinu Kladského pomezí.</p>
         <ul><li>terasa s výhledem</li><li>vlastní koupelna</li><li>TV se satelitem</li><li>Wi-Fi</li></ul>
+        </div>
       </div>
       <div class="pokoj" data-r>
+        <img class="pokoj-img" src="../stock_photos/photo_1.jpg" alt="Apartmán – ilustrační" onerror="this.remove()">
+        <div class="pokoj-in">
         <span class="typ">Komfort</span>
         <h3>Apartmán</h3>
         <p>Zajímavé architektonické řešení a dostatek prostoru až pro 4 osoby.</p>
         <ul><li>až 4 osoby</li><li>vlastní koupelna</li><li>TV se satelitem</li><li>Wi-Fi</li></ul>
+        </div>
       </div>
     </div>
     <p class="pokoje-note">Kapacita až 33 lůžek — ubytujeme jednotlivce, rodiny i větší skupiny. Parkování na hotelovém parkovišti zdarma.</p>
   </div>
 </section>
+
+<!-- GALERIE PÁS -->
+<div class="gpas" aria-hidden="true">
+  <div class="gpas-track">
+    <img src="photos/hero.jpg" alt=""><img src="../stock_photos/photo_2.jpg" alt="" onerror="this.remove()"><img src="photos/restaurace.jpg" alt=""><img src="../stock_photos/photo_5.jpg" alt="" onerror="this.remove()"><img src="../stock_photos/photo_3.jpg" alt="" onerror="this.remove()"><img src="../stock_photos/photo_6.jpg" alt="" onerror="this.remove()">
+    <img src="photos/hero.jpg" alt=""><img src="../stock_photos/photo_2.jpg" alt="" onerror="this.remove()"><img src="photos/restaurace.jpg" alt=""><img src="../stock_photos/photo_5.jpg" alt="" onerror="this.remove()"><img src="../stock_photos/photo_3.jpg" alt="" onerror="this.remove()"><img src="../stock_photos/photo_6.jpg" alt="" onerror="this.remove()">
+  </div>
+</div>
 
 <!-- RESTAURACE -->
 <section class="sec" id="restaurace">
@@ -348,6 +410,22 @@ footer{background:var(--smrk2);color:var(--papir);padding:60px 0 26px}
   </div>
 </section>
 
+<!-- ROK NA PRAJZKU -->
+<section class="sec" id="sezony" style="padding-top:0">
+  <div class="wrap">
+    <div data-r>
+      <span class="oko">Rok na Prajzku</span>
+      <h2>Krásně je tu <em>v každém období</em></h2>
+    </div>
+    <div class="sezony" data-r>
+      <div class="sez"><span class="ic">🌸</span><h3>Jaro</h3><p>Pěší trasy všech obtížností, probouzející se skalní města a minerální prameny.</p></div>
+      <div class="sez"><span class="ic">☀️</span><h3>Léto</h3><p>Cyklostezky 50 m od penzionu, letní terasa a výlety do Adršpachu.</p></div>
+      <div class="sez"><span class="ic">🍂</span><h3>Podzim</h3><p>Skalní města v barvách, rozhledny Kladského pomezí a klid na túry.</p></div>
+      <div class="sez"><span class="ic">❄️</span><h3>Zima</h3><p>Lyžařské stopy a skiareály Machov, Janovičky a Police nad Metují.</p></div>
+    </div>
+  </div>
+</section>
+
 <!-- PRAKTICKY -->
 <section class="sec" id="prakticky" style="padding-top:0">
   <div class="wrap">
@@ -360,6 +438,30 @@ footer{background:var(--smrk2);color:var(--papir);padding:60px 0 26px}
       <div class="prak-i" data-r><span class="ic">📶</span><b>Wi-Fi zdarma</b><span>v celém penzionu</span></div>
       <div class="prak-i" data-r><span class="ic">🚲</span><b>Kola i lyže</b><span>půjčovna a úschovna</span></div>
       <div class="prak-i" data-r><span class="ic">🔒</span><b>Pokojové trezory</b><span>pro klid na výletech</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- RECENZE -->
+<section class="sec" id="recenze">
+  <div class="wrap">
+    <div data-r style="text-align:center">
+      <span class="oko" style="justify-content:center">Hosté říkají</span>
+      <h2>Vracejí se k nám <em>rádi</em></h2>
+    </div>
+    <div class="test-wrap" data-r>
+      <div id="test-track">
+        <div class="test-i"><div class="hvezdy">★★★★★</div>
+          <p>„Skvělá poloha na výlety do Adršpachu, milý personál a výborná kuchyně. Příští rok zase!"</p>
+          <cite>Rodina s dětmi · Praha</cite></div>
+        <div class="test-i"><div class="hvezdy">★★★★★</div>
+          <p>„Kola jsme měli v úschovně, ráno snídaně a večer poctivá večeře. Přesně to, co od penzionu čekáte."</p>
+          <cite>Cyklisté · Brno</cite></div>
+        <div class="test-i"><div class="hvezdy">★★★★★</div>
+          <p>„Čisté pokoje, klid a všude blízko. Hronov je krásná základna pro celé Broumovsko."</p>
+          <cite>Turisté · Ostrava</cite></div>
+      </div>
+      <div id="test-dots"></div>
     </div>
   </div>
 </section>
@@ -382,7 +484,12 @@ footer{background:var(--smrk2);color:var(--papir);padding:60px 0 26px}
       <span class="oko">Kontakt</span>
       <h2>Najdete nás <em>v Hronově</em></h2>
     </div>
-    <div class="kont-grid">
+    <div class="cesta">
+      <div class="cesta-i" data-r><span class="ic">🚗</span><b>Autem</b><span>Husova 223, Hronov — parkování přímo u penzionu zdarma.</span></div>
+      <div class="cesta-i" data-r><span class="ic">🚂</span><b>Vlakem</b><span>Nádraží Hronov je pár minut chůze, spojení přes Náchod.</span></div>
+      <div class="cesta-i" data-r><span class="ic">🚲</span><b>Na kole</b><span>Cyklostezky Kladského pomezí vedou 50 m od domu.</span></div>
+    </div>
+    <div class="kont-grid" style="margin-top:20px">
       <div class="kont-card" data-r>
         <div class="kont-i"><span class="ik">✦</span><div><strong>Adresa</strong>Husova 223, 549 31 Hronov</div></div>
         <div class="kont-i"><span class="ik">✦</span><div><strong>Telefon</strong><a href="tel:+420777767980" style="text-decoration:none">+420 777 767 980</a> · pevná linka 491 482 338</div></div>
@@ -452,6 +559,24 @@ var obs = new IntersectionObserver(function(es){
   es.forEach(function(e,i){ if(e.isIntersecting){ setTimeout(function(){ e.target.classList.add('vis'); }, i*70); obs.unobserve(e.target); } });
 }, {threshold:.12});
 document.querySelectorAll('[data-r]').forEach(function(el){ obs.observe(el); });
+
+(function(){
+  var track = document.getElementById('test-track'), dots = document.getElementById('test-dots');
+  if (!track) return;
+  var n = track.children.length, i = 0;
+  for (var k = 0; k < n; k++) {
+    var b = document.createElement('button');
+    b.setAttribute('aria-label', 'Recenze ' + (k+1));
+    b.addEventListener('click', (function(idx){ return function(){ jdi(idx); }; })(k));
+    dots.appendChild(b);
+  }
+  function jdi(x){ i = x; track.style.transform = 'translateX(-' + (i*100) + '%)';
+    Array.prototype.forEach.call(dots.children, function(d, di){ d.classList.toggle('on', di === i); }); }
+  jdi(0);
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    setInterval(function(){ jdi((i+1) % n); }, 6000);
+  }
+})();
 
 document.querySelectorAll('a[href^="#"]').forEach(function(a){
   a.addEventListener('click', function(e){
