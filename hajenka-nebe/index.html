@@ -72,9 +72,11 @@ nav.m a:hover{background:var(--krem2);color:var(--hned)}
 .k-h .em{font-size:1.05rem}
 .k-h .sub{display:block;color:#e8d5ae;font-family:'Nunito Sans',sans-serif;font-weight:700;font-size:.68rem;letter-spacing:.09em;text-transform:uppercase;margin-top:.3rem}
 .k p{font-size:.88rem;margin:.85rem 1.15rem 1.15rem;flex:1}
-.intgal{display:grid;grid-template-columns:repeat(6,1fr);gap:.6rem;margin-top:2rem}
-.intgal img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:12px}
-@media(max-width:900px){.intgal{grid-template-columns:repeat(3,1fr)}}
+.intgal{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:235px;gap:.8rem;margin-top:2rem}
+.intgal img{width:100%;height:100%;object-fit:cover;border-radius:14px;transition:.3s}
+.intgal img:hover{transform:scale(1.02)}
+.intgal .big{grid-column:span 2;grid-row:span 2}
+@media(max-width:900px){.intgal{grid-template-columns:1fr 1fr;grid-auto-rows:200px}.intgal .big{grid-column:span 2}}
 .gal{display:grid;grid-template-columns:repeat(4,1fr);gap:.7rem;margin-top:2.4rem}
 .gal img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:12px;transition:.3s;cursor:pointer}
 .gal img:hover{transform:scale(1.025)}
@@ -171,12 +173,11 @@ footer a{color:#e8dfc6}
       <div class="k"><div class="k-h"><h3>Louka</h3><span class="sub">2 lůžka · přízemí</span></div><p>Malý apartmán pro dva — tak akorát na romantický únik z města.</p></div>
     </div>
     <div class="intgal" data-r>
-      <img src="photos/int-loznice.jpg" alt="Ložnice apartmánu Hájenka" loading="lazy">
+      <img class="big" src="photos/int-loznice.jpg" alt="Ložnice apartmánu Hájenka" loading="lazy">
       <img src="photos/int-kuchynka.jpg" alt="Kuchyňka s jídelním stolem" loading="lazy">
       <img src="photos/int-pokoj2.jpg" alt="Pokoj apartmánu Hájenka" loading="lazy">
       <img src="photos/int-posezeni.jpg" alt="Posezení v apartmánu" loading="lazy">
       <img src="photos/int-sprcha.jpg" alt="Sprchový kout" loading="lazy">
-      <img src="photos/int-koupelna.jpg" alt="Koupelna apartmánu" loading="lazy">
     </div>
     <p class="pozn center" style="margin-top:.8rem" data-r>Nahlédněte dovnitř — na snímcích apartmán Hájenka.</p>
 
