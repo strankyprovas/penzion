@@ -61,14 +61,19 @@ nav.m a:hover{background:var(--krem2);color:var(--hned)}
 .pas span{font-size:.85rem;opacity:.8}
 .oh-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:3rem;align-items:center}
 .oh-grid img{border-radius:18px;box-shadow:0 22px 50px rgba(46,64,48,.22)}
-.ap-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1.2rem;margin-top:2.4rem}
-.ap{background:#fff;border:1px solid var(--linka);border-radius:16px;padding:1.5rem 1.4rem;box-shadow:0 10px 26px rgba(60,51,39,.06)}
-.ap h3{font-size:1.35rem;margin-bottom:.2rem}
-.ap .luzka{color:var(--karamel);font-weight:700;font-size:.82rem;letter-spacing:.08em;text-transform:uppercase}
-.ap p{font-size:.9rem;margin-top:.5rem}
+.ap-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1.1rem;margin-top:2.4rem}
+.ap{background:#fff;border:1px solid var(--linka);border-radius:16px;overflow:hidden;box-shadow:0 12px 30px rgba(60,51,39,.08);display:flex;flex-direction:column;transition:.25s}
+.ap:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(46,64,48,.16)}
+.ap-h{background:linear-gradient(150deg,var(--les),#405a40);color:#fff;padding:1.15rem 1.2rem .95rem;position:relative}
+.ap-h::after{content:"";position:absolute;left:1.2rem;bottom:.55rem;width:34px;height:2px;background:var(--karamel)}
+.ap-h h3{color:#fff;font-size:1.4rem;margin:0}
+.ap .luzka{display:inline-block;margin:.85rem 0 0 1.2rem;background:var(--krem2);color:var(--hned);border:1px solid var(--linka);border-radius:999px;padding:.22rem .8rem;font-weight:700;font-size:.72rem;letter-spacing:.07em;text-transform:uppercase}
+.ap p{font-size:.88rem;margin:.6rem 1.2rem 1.2rem}
 .sl-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.2rem;margin-top:2.2rem}
-.sl{background:#fff;border:1px solid var(--linka);border-radius:16px;padding:1.4rem 1.5rem}
-.sl h3{font-size:1.15rem;margin-bottom:.3rem}
+.sl{background:#fff;border:1px solid var(--linka);border-radius:16px;padding:1.4rem 1.5rem;display:grid;grid-template-columns:auto 1fr;gap:.95rem;align-items:start;transition:.25s}
+.sl:hover{border-color:var(--salvej);box-shadow:0 12px 28px rgba(46,64,48,.1)}
+.sl .ik{width:46px;height:46px;border-radius:50%;background:var(--krem2);border:1px solid var(--linka);display:grid;place-items:center;font-size:1.25rem}
+.sl h3{font-size:1.12rem;margin-bottom:.25rem}
 .sl p{font-size:.9rem}
 .gal{display:grid;grid-template-columns:repeat(4,1fr);gap:.7rem;margin-top:2.4rem}
 .gal img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:12px;transition:.3s;cursor:pointer}
@@ -91,14 +96,17 @@ footer{background:var(--hned);color:#cfc7b2;padding:3rem 5% 2rem;text-align:cent
 footer a{color:#e8dfc6}
 .center{text-align:center}
 .center .lead{margin:0 auto}
+@media(max-width:1100px){.ap-grid{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:900px){
   nav.m,.tel{display:none}.ham{display:block}
+  .ap-grid{grid-template-columns:1fr 1fr}
   .oh-grid,.kont-grid{grid-template-columns:1fr}
   .pas .grid4{grid-template-columns:1fr 1fr}
   .gal{grid-template-columns:1fr 1fr}
   .band{background-attachment:scroll}
   section{padding:3.6rem 0}
 }
+@media(max-width:560px){.ap-grid{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){[data-r]{opacity:1;transform:none;transition:none}}
 </style>
 </head>
@@ -156,19 +164,19 @@ footer a{color:#e8dfc6}
       <p class="lead">Každý apartmán má vlastní kuchyňku (indukční vařič, mikrovlnka, lednice, konvice i nádobí), sprchový kout a toaletu. Povlečení a ručníky jsou v ceně.</p>
     </div>
     <div class="ap-grid">
-      <div class="ap" data-r><h3>Himmelreich</h3><div class="luzka">4 lůžka · podkroví</div><p>Podkrovní apartmán s výhledem do všech světových stran — nejblíž nebi.</p></div>
-      <div class="ap" data-r><h3>Nebe</h3><div class="luzka">5 lůžek · 2 ložnice</div><p>Největší apartmán se dvěma ložnicemi a dvěma koupelnami — ideální pro rodinu.</p></div>
-      <div class="ap" data-r><h3>Hájenka</h3><div class="luzka">4 lůžka · 2 ložnice</div><p>Přízemní apartmán se dvěma ložnicemi, pohodlný i pro delší pobyty.</p></div>
-      <div class="ap" data-r><h3>Lípa</h3><div class="luzka">3 lůžka · 1. patro</div><p>Útulný apartmán s výhledem na rybníček a staletou lípu před domem.</p></div>
-      <div class="ap" data-r><h3>Louka</h3><div class="luzka">2 lůžka · přízemí</div><p>Malý apartmán pro dva — tak akorát na romantický únik z města.</p></div>
+      <div class="ap" data-r><div class="ap-h"><h3>Himmelreich</h3></div><span class="luzka">4 lůžka · podkroví</span><p>Podkrovní apartmán s výhledem do všech světových stran — nejblíž nebi.</p></div>
+      <div class="ap" data-r><div class="ap-h"><h3>Nebe</h3></div><span class="luzka">5 lůžek · 2 ložnice</span><p>Největší apartmán se dvěma ložnicemi a dvěma koupelnami — ideální pro rodinu.</p></div>
+      <div class="ap" data-r><div class="ap-h"><h3>Hájenka</h3></div><span class="luzka">4 lůžka · 2 ložnice</span><p>Přízemní apartmán se dvěma ložnicemi, pohodlný i pro delší pobyty.</p></div>
+      <div class="ap" data-r><div class="ap-h"><h3>Lípa</h3></div><span class="luzka">3 lůžka · 1. patro</span><p>Útulný apartmán s výhledem na rybníček a staletou lípu před domem.</p></div>
+      <div class="ap" data-r><div class="ap-h"><h3>Louka</h3></div><span class="luzka">2 lůžka · přízemí</span><p>Malý apartmán pro dva — tak akorát na romantický únik z města.</p></div>
     </div>
     <div class="sl-grid">
-      <div class="sl" data-r><h3>🍳 Snídaně i polopenze</h3><p>Po domluvě snídaně, polopenze nebo snídaňové košíky až k apartmánu.</p></div>
-      <div class="sl" data-r><h3>🍷 Společenská místnost</h3><p>Bývalá konírna s barem — posezení, deskovky, večery s přáteli.</p></div>
-      <div class="sl" data-r><h3>🔥 Ohniště a gril</h3><p>Venkovní posezení s ohništěm a grilem, prosklená veranda pro chladnější večery.</p></div>
-      <div class="sl" data-r><h3>🚲 Lyžárna a kolárna</h3><p>Zázemí pro lyže i kola — a po houbách i sušička hub.</p></div>
-      <div class="sl" data-r><h3>🐾 Mazlíčci vítáni</h3><p>Po předchozí domluvě — pes 250–450 Kč/noc, pelíšek s sebou.</p></div>
-      <div class="sl" data-r><h3>🐴 Koně na pastvině</h3><p>Koně k hájence patří — a od léta 2027 chystáme i vyjížďky.</p></div>
+      <div class="sl" data-r><span class="ik">🍳</span><div><h3>Snídaně i polopenze</h3><p>Po domluvě snídaně, polopenze nebo snídaňové košíky až k apartmánu.</p></div></div></div>
+      <div class="sl" data-r><span class="ik">🍷</span><div><h3>Společenská místnost</h3><p>Bývalá konírna s barem — posezení, deskovky, večery s přáteli.</p></div></div></div>
+      <div class="sl" data-r><span class="ik">🔥</span><div><h3>Ohniště a gril</h3><p>Venkovní posezení s ohništěm a grilem, prosklená veranda pro chladnější večery.</p></div></div></div>
+      <div class="sl" data-r><span class="ik">🚲</span><div><h3>Lyžárna a kolárna</h3><p>Zázemí pro lyže i kola — a po houbách i sušička hub.</p></div></div></div>
+      <div class="sl" data-r><span class="ik">🐾</span><div><h3>Mazlíčci vítáni</h3><p>Po předchozí domluvě — pes 250–450 Kč/noc, pelíšek s sebou.</p></div></div></div>
+      <div class="sl" data-r><span class="ik">🐴</span><div><h3>Koně na pastvině</h3><p>Koně k hájence patří — a od léta 2027 chystáme i vyjížďky.</p></div></div></div>
     </div>
   </div>
 </section>
@@ -208,10 +216,10 @@ footer a{color:#e8dfc6}
       <p class="lead">Les začíná pár kroků od domu. V létě turistika, kola a houbaření, v zimě běžky rovnou od hájenky a sjezdovky kousek autem.</p>
     </div>
     <div class="ok-grid">
-      <div class="sl" data-r><h3>⛷ Lyžování</h3><p>Kašperské Hory 3 km · Zadov 12 km · Špičák 30 km. Při dobré nadílce běžecké stopy přímo v okolí.</p></div>
-      <div class="sl" data-r><h3>🥾 Turistika a kola</h3><p>Značené trasy na Huťskou horu, Poledník i Ždanidla, cyklotrasy všemi směry.</p></div>
-      <div class="sl" data-r><h3>🍄 Houbaření</h3><p>Lesy kolem hájenky jsou houbařský ráj — a sušička hub je u nás připravená.</p></div>
-      <div class="sl" data-r><h3>🏰 Výlety</h3><p>Hrad Kašperk, Kašperské Hory, Sušice, vrcholy a slatě Národního parku Šumava.</p></div>
+      <div class="sl" data-r><span class="ik">⛷</span><div><h3>Lyžování</h3><p>Kašperské Hory 3 km · Zadov 12 km · Špičák 30 km. Při dobré nadílce běžecké stopy přímo v okolí.</p></div></div>
+      <div class="sl" data-r><span class="ik">🥾</span><div><h3>Turistika a kola</h3><p>Značené trasy na Huťskou horu, Poledník i Ždanidla, cyklotrasy všemi směry.</p></div></div>
+      <div class="sl" data-r><span class="ik">🍄</span><div><h3>Houbaření</h3><p>Lesy kolem hájenky jsou houbařský ráj — a sušička hub je u nás připravená.</p></div></div>
+      <div class="sl" data-r><span class="ik">🏰</span><div><h3>Výlety</h3><p>Hrad Kašperk, Kašperské Hory, Sušice, vrcholy a slatě Národního parku Šumava.</p></div></div>
     </div>
   </div>
 </section>
